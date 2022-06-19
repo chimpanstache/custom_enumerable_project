@@ -19,5 +19,11 @@ RSpec.describe Enumerable do
         expect(enumerable.my_count { |value| value == 5 }).to eq 1
       end
     end
+
+    context 'when given a parameter' do
+      it 'returns the number of occurences inside the enumerable' do
+        expect(enumerable.my_count(1)).to eq 2
+      end
+    end
   end
 end

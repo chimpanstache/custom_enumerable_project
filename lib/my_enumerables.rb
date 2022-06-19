@@ -34,13 +34,10 @@ module Enumerable
     my_select(&block).empty?
   end
 
-  def my_count(param, &block)
+  def my_count(param = nil, &block)
+    return self.my_select {|item| item == param }.size if param != nil
     return self.my_select(&block).size if block_given?
-    index = 0
-    for element in self do
-      index += 1
-    end
-    index
+    my_each.size
   end
 
   def my_map
