@@ -24,6 +24,13 @@ module Enumerable
     true
   end
 
+  def my_any?(&block)
+    return my_count(&block) > 0 if block_given?
+
+    my_each { |item| return true if item == true }
+    false
+  end
+
   def my_none?(&block)
     return my_select(&block).empty? if block_given?
 
@@ -44,7 +51,7 @@ module Enumerable
     to_be_returned
   end
 
-  def my_inject(value = 0, &block)
+  def my_inject(value = 0, sym, &block)
     
   end
 end

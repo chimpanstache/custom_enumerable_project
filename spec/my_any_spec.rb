@@ -12,9 +12,19 @@ RSpec.describe Enumerable do
       end
     end
 
-    context 'when no element matches the condition' do
+    context 'when no block is given' do
+      subject(:enumerable) { [nil, true, 34] }
+
       it 'returns false' do
-        expect(enumerable.my_any?(&:negative?)).to eq false
+        expect(enumerable.my_any? ).to eq true
+      end
+    end
+
+    context 'when no block and empty enum are given' do
+      subject(:enumerable) { [] }
+
+      it 'returns false' do
+        expect(enumerable.my_any? ).to eq false
       end
     end
   end
