@@ -51,8 +51,13 @@ module Enumerable
     to_be_returned
   end
 
-  def my_inject(value = 0, sym, &block)
-    
+  def my_inject(memo = 0, *sym)
+    # byebug
+
+    if block_given?
+      self.my_each {|item| memo = yield(memo, item) }
+      return memo
+    end
   end
 end
 
@@ -65,7 +70,7 @@ class Array
   def my_each
     return self if !block_given?
     for element in self do
-      yield element
+      yield(element)
     end
   end
 end
