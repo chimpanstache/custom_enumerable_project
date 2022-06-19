@@ -19,5 +19,11 @@ RSpec.describe Enumerable do
         expect(enumerable.my_select { |value| value > 40 }).to eq([])
       end
     end
+
+    context 'when there is no block given' do
+      it 'returns an Enumerator' do
+        expect(Enumerator === enumerable.my_select).to be true
+      end
+    end
   end
 end

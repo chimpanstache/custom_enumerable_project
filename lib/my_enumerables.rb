@@ -1,43 +1,41 @@
 module Enumerable
   # Your code goes here
   def my_each_with_index
-    if block_given?
-      index = 0
-      for element in self do
-        yield element, index
-        index += 1
-      end
+    return self if !block_given?
+    index = 0
+    for element in self do
+      yield element, index
+      index += 1
     end
-    self
   end
 
-  def my_select
+  def my_select(&block)
+    return Enumerator.new {} if !block_given?
+
     to_be_returned = []
-    if block_given?
-      for element in self do
-        to_be_returned << element if yield(element) == true
-      end
-    end    
+    my_each { |element| to_be_returned << element if yield(element) == true }
     to_be_returned
   end
 
   def my_all?(&block)
-    self.my_select(&block) == self
+    if !block_given?
+      my_each { |item| return false if item == false || item == nil }
+      return true
+    end
+    my_select(&block) == self
   end
 
   def my_none?(&block)
     self.my_select(&block).empty?
   end
 
-  def my_count(&block)
-    if !block_given?
-      index = 0
-      for element in self do
-        index += 1
-      end
-      return index
+  def my_count(param, &block)
+    return self.my_select(&block).size if block_given?
+    index = 0
+    for element in self do
+      index += 1
     end
-    self.my_select(&block).size
+    index
   end
 
   def my_map
@@ -62,11 +60,9 @@ end
 class Array
   # Define my_each here
   def my_each
-    if block_given?
-      for element in self do
-        yield element
-      end
+    return self if !block_given?
+    for element in self do
+      yield element
     end
-    self
   end
 end

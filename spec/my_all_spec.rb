@@ -18,5 +18,29 @@ RSpec.describe Enumerable do
         expect(enumerable.my_all? { |value| value < 5 }).to eq false
       end
     end
+
+    context 'when there is no block given' do
+      subject(:enumerable) { [nil, false, 34] }
+      
+      it 'returns false' do
+        expect(enumerable.my_all?).to eq false
+      end
+
+      context 'when there are no falsy values' do
+        subject(:enumerable) { [nil, false, 34] }
+       
+        it 'returns true' do
+          expect(enumerable.my_all?).to eq false
+        end
+      end
+    end
+
+    context 'when enum is empty' do
+      subject(:enumerable) { [] }
+      
+      it 'returns true' do
+        expect(enumerable.my_all?).to eq true
+      end
+    end
   end
 end
