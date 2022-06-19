@@ -17,5 +17,31 @@ RSpec.describe Enumerable do
         expect(enumerable.my_none? { |value| value == 1 }).to eq false
       end
     end
+
+    context 'when no block is given' do
+      context 'when enumerable is empty' do
+        subject(:enumerable) { [] }
+
+        it 'returns false' do
+          expect(enumerable.my_none?).to eq true
+        end
+      end
+
+      context 'when falsy values only, inside e' do
+        subject(:enumerable) { [nil, false] }
+
+        it 'returns false' do
+          expect(enumerable.my_none?).to eq true
+        end
+      end
+
+      context 'when any element matches the condition' do
+          subject(:enumerable) { [nil, false, true] }
+
+        it 'returns false' do
+          expect(enumerable.my_none?).to eq false
+        end
+      end
+    end
   end
 end

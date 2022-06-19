@@ -27,10 +27,10 @@ RSpec.describe Enumerable do
       end
 
       context 'when there are no falsy values' do
-        subject(:enumerable) { [nil, false, 34] }
+        subject(:enumerable) { [34] }
        
         it 'returns true' do
-          expect(enumerable.my_all?).to eq false
+          expect(enumerable.my_all?).to eq true
         end
       end
     end

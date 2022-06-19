@@ -22,11 +22,16 @@ module Enumerable
       my_each { |item| return false if item == false || item == nil }
       return true
     end
+    
     my_select(&block) == self
   end
 
   def my_none?(&block)
-    self.my_select(&block).empty?
+    if !block_given?
+      my_each { |item| return false if item == true }
+      return true
+    end
+    my_select(&block).empty?
   end
 
   def my_count(param, &block)
