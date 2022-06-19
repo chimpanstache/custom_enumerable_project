@@ -18,20 +18,17 @@ module Enumerable
   end
 
   def my_all?(&block)
-    if !block_given?
-      my_each { |item| return false if item == false || item == nil }
-      return true
-    end
-    
-    my_select(&block) == self
+    return my_select(&block) == self if block_given?
+
+    my_each { |item| return false if item == false || item == nil }
+    true
   end
 
   def my_none?(&block)
-    if !block_given?
-      my_each { |item| return false if item == true }
-      return true
-    end
-    my_select(&block).empty?
+    return my_select(&block).empty? if block_given?
+
+    my_each { |item| return false if item == true }
+    true
   end
 
   def my_count(param = nil, &block)
@@ -40,13 +37,10 @@ module Enumerable
     my_each.size
   end
 
-  def my_map
+  def my_map(&block)
+    return Enumerator.new {} if !block_given?
     to_be_returned = []
-    if block_given?
-      for element in self do
-        to_be_returned << yield(element)
-      end
-    end    
+    my_each { |element| to_be_returned << yield(element) }
     to_be_returned
   end
 
