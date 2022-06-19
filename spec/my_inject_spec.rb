@@ -11,10 +11,17 @@ RSpec.describe Enumerable do
       initial_value = 0
       # calculates the sum of the elements of the enumerable array
       expect(enumerable.my_inject(initial_value) { |sum, value| sum + value }).to eq 88
+      expect(enumerable.my_inject(:+) { |sum, value| sum + value }).to eq 88
     end
 
     it 'can be used to calculate the product' do
       product = enumerable.my_inject(1) { |prod, value| prod * value }
+
+      expect(product).to eq 2_227_680
+    end
+
+    it 'can be used to calculate the product by passing a symbol' do
+      product = enumerable.my_inject(1, :*)
 
       expect(product).to eq 2_227_680
     end
@@ -24,6 +31,7 @@ RSpec.describe Enumerable do
 
       # calculates the sum of the elements of the enumerable array plus the initial value
       expect(enumerable.my_inject(initial_value) { |sum, value| sum + value }).to eq 188
+      expect(enumerable.my_inject(initial_value, :-)).to eq 12
     end
   end
 end

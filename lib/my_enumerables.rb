@@ -51,10 +51,17 @@ module Enumerable
     to_be_returned
   end
 
-  def my_inject(memo = 0, *sym)
-    # byebug
+  def my_inject(*arg)
+    memo = 0
+    memo = arg[0] if arg[0].is_a?(Integer)
 
-    if block_given?
+    if arg[0].is_a?(Symbol)
+      self.my_each {|item| memo = memo.send(arg[0], item) }
+      return memo  
+    elsif arg[1].is_a?(Symbol)
+      self.my_each {|item| memo = memo.send(arg[1], item) }
+      return memo  
+    elsif block_given?
       self.my_each {|item| memo = yield(memo, item) }
       return memo
     end
